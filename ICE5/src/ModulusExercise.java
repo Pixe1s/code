@@ -18,21 +18,35 @@ public final class ModulusExercise
 	 */
 	private static int modPow(int a, int b, int p) throws ArithmeticException
 	{
+		p = Math.abs(p);
 		// HINT: Consider adding something here!
 		if(b == 0)
 		{
-			return 1;   // a^0 = 1 for all a
+			if (p == 1) {
+				return 0;
+			} else {
+				return 1;   // a^0 = 1 for all a
+			}
 		}
 		else if(b == 1)
 		{
+			while(a < 0) {
+				a += p;
+			}
 			return a%p; // a^1 = a for all a
 		}
 		else if(b%2 == 0)
 		{
+			while(a < 0) {
+				a += p;
+			}
 			return modPow((a*a)%p, (b/2), p);
 		}
 		else if(b%2 == 1)
 		{
+			while(a < 0) {
+				a += p;
+			}
 			return (a * modPow((a*a)%p, ((b-1)/2), p))%p;
 		}
 		else

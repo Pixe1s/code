@@ -12,13 +12,22 @@ public final class OverflowExercise
 		while(true)
 		{
 			System.out.println("You currently have an account balance of $" + acctBal + ".");
+			//System.out.println("Account cannot go negative or over $32767.");
 			System.out.print("Deposit how much? ");
 			
 			input = scanner.nextLine().trim();
 			
 			try
 			{
-				acctBal += Integer.parseInt(input);
+				int depAmt = Integer.parseInt(input);
+				/*if (tryDeposit(depAmt, acctBal)) {
+					acctBal += depAmt;
+				}*/
+				if (Math.addExact(acctBal, depAmt) <= Short.MAX_VALUE && (Math.addExact(acctBal, depAmt)) >= 0) {
+					acctBal = (short)Math.addExact(acctBal, depAmt);
+				} else {
+					throw new ArithmeticException("Cannot deposit that amount. Account cannot go negative or over $32767.");
+				}
 			}
 			catch(NumberFormatException nfe)
 			{
@@ -35,5 +44,14 @@ public final class OverflowExercise
 		
 		System.out.println("Thank you, and goodbye.");
 		scanner.close();
-	}	
+	}
+	
+	public static boolean tryDeposit(int depAmt, short acctBal) {
+		if ((depAmt + acctBal) <= Short.MAX_VALUE && (depAmt + acctBal) >= 0) {
+			return true;
+		} else {
+			throw new ArithmeticException("Cannot deposit that amount. Account cannot go negative or over $32767.");
+			//return false;
+		}
+	}
 }
